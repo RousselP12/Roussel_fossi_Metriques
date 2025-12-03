@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Commits GitHub — Analyse minute par minute</title>
+
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;margin:0;padding:20px;display:flex;flex-direction:column;align-items:center}
+    header{max-width:980px;width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    h1{font-size:1.25rem;margin:0}
+    #chart_div{width:100%;max-width:980px;height:480px}
+    button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+    .note{max-width:980px;margin-top:12px;color:#444}
+  </style>
+
+  <!-- Google Charts -->
+  <script src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(fetchCommits);
+
+    // 🔥 ICI : API de TON dépôt GitHub
+    const API_URL = "https://api.github.com/repos/RousselP12/Roussel_fossi_Metriques/commits";
+
+    let chart, dataTable, options;
+
+    async function fetchCommits(){
+      try{
+        const response = await fetch(API_URL);
+        const commits = await response.json();
+
+        const minutesCount = {};
+
+        // Récupère la minute de chaque commit
+        commits.forEach(c => {
+          try{
+            const date = c.commit.author.date; // ex: "2024-02-11T11:57:27Z"
+            const minute = extractMinuteFromISO(date);
+            minutesCount[minute] = (minutesCount[minute] || 0) + 1;
+          }catch(err){}
+        });
+
+        const chartData = [["Minute", "Commits"]];
+        for(let m = 0; m < 60; m++){
+          chartData.push([m.toString().padStart(2,"0"), minutesCount[m] || 0]);
+        }
+
+        drawChart(chartData);
+
+      }catch(err){
+        alert("Erreur lors de la récupération des commits : " + err);
+      }
+    }
+
+    function extractMinuteFromISO(dateString){
+      const d = new Date(dateString);
+      return d.getUTCMinutes();
+    }
+
+    function drawChart(dataArray){
+      dataTable = google.visualization.arrayToDataTable(dataArray);
+
+      options = {
+        title: "Nombre de commits par minute — Roussel_fossi_Metriques",
+        legend: { position: "none" },
+        height: 480,
+        hAxis: { title: "Minute dans l'heure (0–59)" },
+        vAxis: { title: "Nombre de commits", viewWindow:{ min:0 } },
+        bar: { groupWidth: "75%" },
+        animation: { duration: 500, easing: "out" }
+      };
+
+      chart = new google.visualization.ColumnChart(
+        document.getElementById("chart_div")
+      );
+      chart.draw(dataTable, options);
+    }
+
+    window.addEventListener("resize", () => {
+      if(chart && dataTable) chart.draw(dataTable, options);
+    });
+  </script>
+
+</head>
+<body>
+
+<header>
+  <h1>Commits GitHub — Analyse minute par minute</h1>
+  <button onclick="fetchCommits()">Recharger les données</button>
+</header>
+
+<div id="chart_div" role="img" aria-label="Histogramme des commits GitHub"></div>
+
+<p class="note">
+  Ce graphique analyse les commits du dépôt GitHub 
+  <code>RousselP12/Roussel_fossi_Metriques</code> et les regroupe par minute (0–59).
+</p>
+
+</body>
+</html>
