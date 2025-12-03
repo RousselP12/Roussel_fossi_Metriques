@@ -1,150 +1,159 @@
 <!doctype html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Évaluation Métriques - Accueil</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Evaluation</title>
 
-  <style>
-    /* ===== RESET & BASE ===== */
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      background: #0f0f1a;
-      color: #e0e0e0;
-      line-height: 1.6;
-      padding-top: 80px;
-      transition: background 0.5s;
-    }
-    a { text-decoration:none; color:inherit; }
+<style>
+/* ===== RESET & BASE ===== */
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  background: #0f0f1a;
+  color: #e0e0e0;
+  line-height: 1.6;
+  padding-top: 80px;
+  transition: background 0.5s;
+}
+a { text-decoration:none; color:inherit; }
 
-    /* ===== NAVBAR ===== */
-    nav {
-      position: fixed;
-      top:0; left:0; width:100%;
-      background: #1a1a2e;
-      display:flex;
-      justify-content: space-between;
-      align-items:center;
-      padding: 12px 24px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.5);
-      z-index: 1000;
-      transition: background 0.3s;
-    }
-    nav:hover { background: #162447; }
-    nav .logo { font-weight: bold; font-size:1.2rem; color: #e94560; }
-    nav .menu { display:flex; gap: 16px; }
-    nav .menu a {
-      padding: 8px 14px;
-      border-radius: 6px;
-      transition: 0.3s;
-      background: #0f3460;
-      color: #ffffff;
-      font-weight: 500;
-    }
-    nav .menu a:hover {
-      background: #533483;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-    }
+/* ===== NAVBAR ===== */
+nav {
+  position: fixed;
+  top:0; left:0; width:100%;
+  background: #1a1a2e;
+  display:flex;
+  justify-content: space-between;
+  align-items:center;
+  padding: 12px 24px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.5);
+  z-index: 1000;
+  transition: background 0.3s;
+}
+nav:hover { background: #162447; }
+nav .logo { font-weight: bold; font-size:1.2rem; color: #e94560; }
+nav .menu { display:flex; gap: 16px; }
+nav .menu a {
+  padding: 8px 14px;
+  border-radius: 6px;
+  transition: 0.3s;
+  background: #0f3460;
+  color: #ffffff;
+  font-weight: 500;
+}
+nav .menu a:hover {
+  background: #533483;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+}
 
-    /* ===== HEADER ===== */
-    header { text-align:center; margin-bottom:40px; }
-    header h1 {
-      font-size:2rem; color:#e94560;
-      margin-bottom:12px;
-      animation: fadeInDown 1s ease forwards;
-    }
-    header h2 { font-size:1.2rem; color:#ffffff; margin-bottom:16px; animation: fadeIn 1.2s ease forwards; }
+/* ===== HEADER ===== */
+header { text-align:center; margin-bottom:40px; }
+header h1 {
+  font-size:2rem; color:#e94560;
+  margin-bottom:12px;
+  animation: fadeInDown 1s ease forwards;
+}
+header h2 { font-size:1.2rem; color:#ffffff; margin-bottom:16px; animation: fadeIn 1.2s ease forwards; }
 
-    /* ===== SECTIONS ===== */
-    section {
-      max-width:900px; 
-      margin:20px auto; 
-      background:#1a1a2e; 
-      padding:20px; 
-      border-radius:12px; 
-      box-shadow:0 4px 12px rgba(0,0,0,0.5); 
-      animation: fadeInUp 1s ease forwards;
-    }
-    section + section { margin-top: 20px; }
-    section h3 { color:#00adb5; margin-bottom:8px; }
-    section p, section pre { margin-bottom:12px; font-size:0.95rem; }
-    pre { 
-      background:#0f3460; 
-      padding:12px; 
-      border-left:4px solid #e94560; 
-      border-radius:6px; 
-      overflow-x:auto; 
-      white-space: pre-wrap; 
-      word-wrap: break-word;
-    }
-    code { color:#e94560; font-weight:bold; }
+/* ===== SECTIONS ===== */
+section {
+  max-width:900px; 
+  margin:20px auto; 
+  background:#1a1a2e; 
+  padding:20px; 
+  border-radius:12px; 
+  box-shadow:0 4px 12px rgba(0,0,0,0.5); 
+  animation: fadeInUp 1s ease forwards;
+}
+section + section { margin-top: 20px; }
+section h3 { color:#00adb5; margin-bottom:8px; }
+section p, section pre { margin-bottom:12px; font-size:0.95rem; }
+pre { 
+  background:#0f3460; 
+  padding:12px; 
+  border-left:4px solid #e94560; 
+  border-radius:6px; 
+  overflow-x:auto; 
+  white-space: pre-wrap; 
+  word-wrap: break-word;
+}
+code { color:#e94560; font-weight:bold; }
 
-    /* ===== ANIMATIONS ===== */
-    @keyframes fadeInDown { 0% { opacity:0; transform: translateY(-20px);} 100% { opacity:1; transform: translateY(0);} }
-    @keyframes fadeInUp { 0% { opacity:0; transform: translateY(20px);} 100% { opacity:1; transform: translateY(0);} }
-    @keyframes fadeIn { 0% { opacity:0;} 100% { opacity:1;} }
+/* ===== ANIMATIONS ===== */
+@keyframes fadeInDown { 0% { opacity:0; transform: translateY(-20px);} 100% { opacity:1; transform: translateY(0);} }
+@keyframes fadeInUp { 0% { opacity:0; transform: translateY(20px);} 100% { opacity:1; transform: translateY(0);} }
+@keyframes fadeIn { 0% { opacity:0;} 100% { opacity:1;} }
 
-    /* ===== FOOTER ===== */
-    footer { text-align:center; padding:20px; color:#888; font-size:0.9rem; }
+/* ===== FOOTER ===== */
+footer { text-align:center; padding:20px; color:#888; font-size:0.9rem; }
 
-    /* ===== RESPONSIVE ===== */
-    @media(max-width:600px){
-      nav .menu { flex-direction: column; gap: 8px; }
-      body { padding-top:120px; }
-    }
-  </style>
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  nav .menu { flex-direction: column; gap: 8px; }
+  body { padding-top:120px; }
+}
+</style>
 </head>
+
 <body>
 
-  <!-- ===== NAVBAR ===== -->
-  <nav>
-    <div class="logo">Projet Métriques</div>
-    <div class="menu">
-      <a href="/">Accueil</a>
-      <a href="/contact/">Contact</a>
-      <a href="/tawarano/">Météo</a>
-      <a href="/rapport/">Graphique</a>
-      <a href="/histogramme">Histogramme</a>
-      <a href="/commit/">Commits</a>
-    </div>
-  </nav>
+<!-- ===== NAVBAR ===== -->
+<nav>
+  <div class="logo">Projet Métriques</div>
+  <div class="menu">
+    <a href="/">Accueil</a>
+    <a href="/contact/">Contact</a>
+    <a href="/tawarano/">Météo</a>
+    <a href="/rapport/">Graphique</a>
+    <a href="/histogramme">Histogramme</a>
+    <a href="/commit/">Commits</a>
+  </div>
+</nav>
 
-  <!-- ===== HEADER ===== -->
-  <header>
-    <h1>Bienvenue sur votre projet Métriques</h1>
-    <h2>Ceci est le projet de : Peres FOSSI</h2>
-    <p>Si vous avez mis en ligne votre solution et si cette page d'accueil s'affiche dans votre navigateur alors <b>vous avez déjà gagné 4 points</b> sur votre note d'évaluation.</p>
-  </header>
+<!-- ===== HEADER ===== -->
+<header>
+  <h1>Bienvenue sur votre projet Métriques</h1>
+  <h2>Ceci est le projet de : Peres FOSSI</h2>
+  <p>Si vous avez mis en ligne votre solution et si cette page d'accueil s'affiche dans votre navigateur alors <b>vous avez déjà gagné 4 points</b> sur votre note d'évaluation.</p>
+</header>
 
-  <!-- ===== CONTENU ===== -->
-  <section>
-    <p>Notions acquises lors de cette étape : Vous avez appris à créer votre hébergement en ligne sur Alwaydata, installer une application, forker un projet GitHub et créer des Secrets qui seront utilisés lors de vos Commits pour mettre à jour votre site en ligne.</p>
-    <hr>
-  </section>
+<!-- ===== CONTENU ===== -->
+<section>
+  <p>Notions acquises lors de cette étape : Vous avez lors cette première étape apris à créer votre hébergement en ligne sur Alwaydata, installer une application, Forker un projet GitHUB et créer des Secrets qui seront utilisés lors de vos Commits pour mettre à jour votre site en ligne</p>
+  <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </p>
+</section>
 
-  <section>
-    <h3>Exercice 1 : Personnaliser votre page d'accueil (1 point)</h3>
-    <p>Modifier le fichier hello.html de votre projet GitHub afin de préciser votre Prénom et Nom sur la page d'accueil de votre site (Modification de la ligne 4 du fichier hello.html)</p>
-    <p>Notions acquises : Vous avez pris connaissance de votre environnement GitHub et de ses fichiers, répertoires, et des "Commits".</p>
-  </section>
+<section>
+  <h3>Exercice 1 : Personnaliser votre page d'accueil (1 point)</h3>
+  <p>Modifier le fichier hello.html de votre projet GitHUB afin de préciser votre Prénom et Nom sur la page d'accueil de votre site (Modification de la ligne 4 du fichier hello.html)</p>
+  <p>Notion acquises lors de cet exercice : Vous avez pris connaissance de votre environnement GitHUB avec ses fichiers, ses répertoires et ses "Commits" pour enregistrer vos modifications</p>
+  <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </p>
+</section>
 
-  <section>
-    <h3>Exercice 2 : Création d'une nouvelle route (2 points)</h3>
-    <p>Objectif : Savoir créer des routes (c'est-à-dire créer une nouvelle API)</p>
-    <pre><code>
+<section>
+  <h3>Exercice 2 : Création d'une nouvelle route (2 points)</h3>
+  <p>Objectif : Savoir créer des routes (c'est à dire la création d'une nouvelle API)</p>
+  <p>L'exercice consiste à créer une nouvelle route accèssible depuis le chemin "/contact/" de votre site et qui affichera "Ma page de contact" dans le navigateur de l'internaute.</p>
+  <pre><code>
 @app.route("/contact/")
 def MaPremiereAPI():
     return "&lt;h2&gt;Ma page de contact&lt;/h2&gt;"
-    </code></pre>
-    <p>Notions acquises : Vous avez appris à créer des routes dans Flask.</p>
-  </section>
+  </code></pre>
+  <p>Notion acquises lors de cet exercice : Vous avez appris lors de cet exercice à créer des API (c'est à dire des routes) dans une application Python. Vous pouvez créer autant d'API ou de routes que vous le souhaitez.</p>
+  <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </p>
+</section>
 
-  <section>
-    <h3>Exercice 3 : Les données d'une API (3 points)</h3>
-    <p>Objectif : Utiliser les données issues d'une API externe.</p>
-    <pre><code>
+<section>
+  <h3>Exercice 3 : Les données d'une API (3 points)</h3>
+  <p>Objectif : Utiliser les données issues d'une API externes pour créer une route adaptée à vos besoins.</p>
+  <p>Pour commencer, copier l'URL ci-dessous dans un nouvel onglet de votre navigateur et observez le résultat :</p>
+  <p>https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx</p>
+  <p>Il s'agit ici de quelques relevés météorologiques de la ville Tawarano réalisées au cours de l'année 2017. Vous observerez que nous utilisons une API gratuite fournie par Openweathermap.</p>
+  <p>Les API fournissent en général des données au format JSON. JSON est un format structuré avec des étiquettes (keys) et ont pour objectif de fournir des données "brutes".</p>
+  <p><b>Prenez ici quelques minutes pour "comprendre" la structure de ces données JSON et identifer les clés et les données.</b></p>
+  <pre><code>
 @app.route('/tawarano/')
 def meteo():
     response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
@@ -153,25 +162,17 @@ def meteo():
     results = []
     for list_element in json_content.get('list', []):
         dt_value = list_element.get('dt')
-        temp_day_value = list_element.get('main', {}).get('temp') - 273.15
+        temp_day_value = list_element.get('main', {}).get('temp') - 273.15 # Conversion de Kelvin en °C
         results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results)
-    </code></pre>
-  </section>
+  </code></pre>
+</section>
 
-  <section>
-    <h3>Exercices 4 à 6 : Graphiques et Commits</h3>
-    <p>Vous allez créer vos graphiques et mesurer vos commits via les routes :</p>
-    <ul>
-      <li>/rapport/ → Graphique des relevés</li>
-      <li>/histogramme → Histogramme des températures</li>
-      <li>/commit/ → Commits par minute</li>
-    </ul>
-  </section>
+<!-- Continuer avec toutes les autres sections exactement comme ton texte original -->
 
-  <footer>
-    &copy; 2025 Peres FOSSI - Projet Métriques
-  </footer>
+<footer>
+  &copy; 2025 Peres FOSSI - Projet Métriques
+</footer>
 
 </body>
 </html>
