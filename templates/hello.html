@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Evaluation</title>
+<title>Peres FOSSI Métrics</title>
 
 <style>
 /* ===== RESET & BASE ===== */
@@ -69,7 +69,7 @@ section {
 }
 section + section { margin-top: 20px; }
 section h3 { color:#00adb5; margin-bottom:8px; }
-section p, section pre { margin-bottom:12px; font-size:0.95rem; }
+section p, section pre, section ul, section ol { margin-bottom:12px; font-size:0.95rem; }
 pre { 
   background:#0f3460; 
   padding:12px; 
@@ -119,7 +119,8 @@ footer { text-align:center; padding:20px; color:#888; font-size:0.9rem; }
   <p>Si vous avez mis en ligne votre solution et si cette page d'accueil s'affiche dans votre navigateur alors <b>vous avez déjà gagné 4 points</b> sur votre note d'évaluation.</p>
 </header>
 
-<!-- ===== CONTENU ===== -->
+<!-- ===== SECTIONS COMPLÈTES ===== -->
+
 <section>
   <p>Notions acquises lors de cette étape : Vous avez lors cette première étape apris à créer votre hébergement en ligne sur Alwaydata, installer une application, Forker un projet GitHUB et créer des Secrets qui seront utilisés lors de vos Commits pour mettre à jour votre site en ligne</p>
   <p>- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - </p>
@@ -152,7 +153,6 @@ def MaPremiereAPI():
   <p>https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx</p>
   <p>Il s'agit ici de quelques relevés météorologiques de la ville Tawarano réalisées au cours de l'année 2017. Vous observerez que nous utilisons une API gratuite fournie par Openweathermap.</p>
   <p>Les API fournissent en général des données au format JSON. JSON est un format structuré avec des étiquettes (keys) et ont pour objectif de fournir des données "brutes".</p>
-  <p><b>Prenez ici quelques minutes pour "comprendre" la structure de ces données JSON et identifer les clés et les données.</b></p>
   <pre><code>
 @app.route('/tawarano/')
 def meteo():
@@ -168,7 +168,47 @@ def meteo():
   </code></pre>
 </section>
 
-<!-- Continuer avec toutes les autres sections exactement comme ton texte original -->
+<section>
+  <h3>Exercice 3 Bis : Les fichiers HTML</h3>
+  <p>Objectif : Comprendre la philosophie des Frameworks</p>
+  <p>Le Framework Flask nous impose de déposer tous les fichiers HTML dans le répertoire templates dédié à cet effet.</p>
+  <p>Depuis GitHUB, nous allons donc créer et déposer dans le répertoire "templates" une page HTML qui sera accessible depuis la route suivante : https://{VOTRE_URL}/rapport/</p>
+</section>
+
+<section>
+  <h3>Exercice 3 Ter : Transfert de données</h3>
+  <p>Mettons à présent ces valeurs sous la forme d'un graphique qui sera pour l'utilisateur bien plus agréable et facile à lire.</p>
+</section>
+
+<section>
+  <h3>Exercice 4 : Créer son histogramme (3 points)</h3>
+  <p>Objectif : Devenir autonome dans la création de ses graphiques.</p>
+  <p>A l'aide des graphiques disponibles dans la galerie open source de Google, créer un nouveau graphique à colonnes (un histogramme) afin de présenter l'évolution des températures de la ville de Tawarano. Ce nouveau graphique sera accessible via https://{Votre URL}/histogramme/</p>
+</section>
+
+<section>
+  <h3>Exercice 5 : Customisation de votre page de contact (3 points)</h3>
+  <p>Objectif : Faites preuve de créativité...</p>
+  <p>Reprenez l'exercice 2 et faites pointer votre route "/contact/" vers un fichier HTML plus élaboré. L'utilisateur pourra laisser son nom, prénom et un message.</p>
+</section>
+
+<section>
+  <h3>Exercice 6 : Combien de Commits pour ce projet ? (4 points)</h3>
+  <p>Objectif : Autonomie totale ...</p>
+  <p>Toutes les solutions informatiques proposent aujourd'hui des API. GitHUB lui-même propose des API pour toutes sortes de mesures. Dans cet exercice, vous allez créer un graphique qui mesurera la quantité de Commits effectués minute par minute.</p>
+  <p>Ce graphique sera accessible via : https://{Votre URL}/commits/</p>
+  <pre><code>
+@app.route('/extract-minutes/<date_string>')
+def extract_minutes(date_string):
+    date_object = datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+    minutes = date_object.minute
+    return jsonify({'minutes': minutes})
+  </code></pre>
+</section>
+
+<section>
+  <h2>FIN DU PROJET</h2>
+</section>
 
 <footer>
   &copy; 2025 Peres FOSSI - Projet Métriques
