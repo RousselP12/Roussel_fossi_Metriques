@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Évolution des températures — Tawarano</title>
+  <style>
+    body{font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial;display:flex;flex-direction:column;align-items:center;padding:20px;margin:0}
+    header{max-width:980px;width:100%;display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}
+    h1{font-size:1.25rem;margin:0}
+    #chart_div{width:100%;max-width:980px;height:480px}
+    .controls{display:flex;gap:8px;align-items:center}
+    textarea{width:360px;height:110px;font-family:monospace;padding:8px}
+    .note{max-width:980px;margin-top:12px;color:#444}
+    button{padding:8px 12px;border-radius:6px;border:1px solid #ccc;background:#fff;cursor:pointer}
+    @media (max-width:600px){textarea{width:100%}}
+  </style>
+  <!-- Google Charts -->
+  <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+  <script>
+    // Charger la librairie corechart
+    google.charts.load('current', {'packages':['corechart']});
+    google.charts.setOnLoadCallback(drawChart);
+
+    // Données d'exemple — remplacer par vos valeurs réelles si besoin.
+    // Format: ["Période", Température en °C]
+    const defaultData = [
+      ['Mois', 'Température (°C)'],
+      ['Jan', 2], ['Fév', 3], ['Mar', 7], ['Avr', 12], ['Mai', 17], ['Juin', 21],
+      ['Jul', 24], ['Aoû', 24], ['Sep', 19], ['Oct', 13], ['Nov', 7], ['Déc', 3]
+    ];
+
+    let chart, dataTable, options;
+
+    function drawChart(dataArray = defaultData){
+      dataTable = google.visualization.arrayToDataTable(dataArray);
+
+      options = {
+        title: 'Évolution mensuelle des températures — Tawarano',
+        height: 480,
+        legend: { position: 'none' },
+        hAxis: { title: 'Mois' },
+        vAxis: { title: 'Température (°C)' , viewWindow: { min: 0 } },
+        animation: { duration: 600, easing: 'out' },
+        bar: { groupWidth: '70%' },
+        tooltip: { isHtml: true }
+      };
+
+      chart = new google.visualization.ColumnChart(document.getElementById('chart_div'));
+      chart.draw(dataTable, options);
+    }
+
+    // Rendre le graphique responsive
+    window.addEventListener('resize', () => {
+      if (chart && dataTable) chart.draw(dataTable, options);
+    });
+
+    // Fonction utilitaire: parser le contenu CSV/texte entré par l'utilisateur
+    function parseTextToArray(text){
+      // Attendu: lignes, séparateur virgule ou tab. Première ligne : en-têtes.
+      const lines = text.trim().split(/\r?\n/).filter(l => l.trim().length>0);
+      const arr = lines.map(line => line.split(/[,\t;]+/).map(cell => {
+        const trimmed = cell.trim();
+        // convertir en nombre si possible
+        const n = Number(trimmed.replace(',', '.'));
+        return (trimmed !== '' && !Number.isNaN(n)) ? n : trimmed;
+      }));
+      return arr;
+    }
+
+    // Bouton: appliquer les données du textarea
+    function applyDataFromTextarea(){
+      const txt = document.getElementById('data_input').value;
+      try{
+        const parsed = parseTextToArray(txt);
+        // Vérifier qu'il y a au moins 2 colonnes et 2 lignes
+        if (!parsed || parsed.length < 2 || parsed[0].length < 2){
+          alert('Format invalide. Le texte doit contenir une première ligne d\'en-têtes et au moins une ligne de données avec au moins 2 colonnes.');
+          return;
+        }
+        drawChart(parsed);
+      }catch(err){
+        alert('Erreur lors de l\'analyse des données : '+err.message);
+      }
+    }
+
+    // Exporter les données actuelles au format CSV
+    function exportCSV(){
+      let csv = '';
+      for (let r = 0; r < dataTable.getNumberOfRows(); r++){
+        const row = [];
+        for (let c = 0; c < dataTable.getNumberOfColumns(); c++){
+          row.push(String(dataTable.getValue(r,c)).replace(/"/g,'""'));
+        }
+        csv += row.map(v => '"'+v+'"').join(',') + '\n';
+      }
+      const blob = new Blob([csv], {type: 'text/csv;charset=utf-8;'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url; a.download = 'tawarano_temperatures.csv'; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    }
+
+    // Remplir textarea exemple au chargement
+    window.addEventListener('DOMContentLoaded', () => {
+      const sampleLines = defaultData.map(r => Array.isArray(r) ? r.join(',') : r).join('\n');
+      document.getElementById('data_input').value = sampleLines;
+    });
+  </script>
+</head>
+<body>
+  <header>
+    <h1>Évolution des températures — Tawarano</h1>
+    <div class="controls">
+      <button onclick="applyDataFromTextarea()">Appliquer les données</button>
+      <button onclick="exportCSV()">Exporter CSV</button>
+    </div>
+  </header>
+
+  <main>
+    <div id="chart_div" role="img" aria-label="Graphique en colonnes montrant l'évolution des températures de Tawarano"></div>
+
+    <section style="display:flex;gap:16px;flex-wrap:wrap;margin-top:12px;max-width:980px">
+      <div>
+        <strong>Entrer vos données</strong>
+        <p style="margin:6px 0 8px 0;color:#555">Collez des données au format CSV ou tabulé — première ligne = en-têtes (ex : Mois,Température)</p>
+        <textarea id="data_input" aria-label="Zone de saisie des données"></textarea>
+      </div>
+
+      <div style="min-width:220px">
+        <strong>Instructions rapides</strong>
+        <ol style="margin:8px 0 0 16px;color:#444">
+          <li>Remplacez les valeurs dans le champ de gauche et cliquez sur <em>Appliquer les données</em>.</li>
+          <li>Utilisez le bouton <em>Exporter CSV</em> pour récupérer les données affichées.</li>
+          <li>Pour changer le titre ou les axes, modifiez la variable <code>options</code> dans le script.</li>
+        </ol>
+      </div>
+    </section>
+
+    <p class="note">Remarque : les données affichées ci-dessus sont un exemple. Remplacez-les par vos relevés réels pour représenter fidèlement Tawarano.</p>
+  </main>
+</body>
+</html>
