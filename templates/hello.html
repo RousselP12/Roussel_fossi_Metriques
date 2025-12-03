@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Évaluation Métriques - Accueil</title>
-  
+
   <style>
     /* ===== RESET & BASE ===== */
     * { margin:0; padding:0; box-sizing:border-box; }
@@ -14,6 +14,7 @@
       color: #e0e0e0;
       line-height: 1.6;
       padding-top: 80px;
+      transition: background 0.5s;
     }
     a { text-decoration:none; color:inherit; }
 
@@ -32,10 +33,7 @@
     }
     nav:hover { background: #162447; }
     nav .logo { font-weight: bold; font-size:1.2rem; color: #e94560; }
-    nav .menu {
-      display:flex;
-      gap: 16px;
-    }
+    nav .menu { display:flex; gap: 16px; }
     nav .menu a {
       padding: 8px 14px;
       border-radius: 6px;
@@ -57,20 +55,36 @@
       margin-bottom:12px;
       animation: fadeInDown 1s ease forwards;
     }
-    header h2 { font-size:1.2rem; color:#ffffff; margin-bottom:16px; }
+    header h2 { font-size:1.2rem; color:#ffffff; margin-bottom:16px; animation: fadeIn 1.2s ease forwards; }
 
     /* ===== SECTIONS ===== */
-    section { max-width:900px; margin:20px auto; background:#1a1a2e; padding:20px; border-radius:12px; box-shadow:0 4px 12px rgba(0,0,0,0.5); }
+    section {
+      max-width:900px; 
+      margin:20px auto; 
+      background:#1a1a2e; 
+      padding:20px; 
+      border-radius:12px; 
+      box-shadow:0 4px 12px rgba(0,0,0,0.5); 
+      animation: fadeInUp 1s ease forwards;
+    }
+    section + section { margin-top: 20px; }
     section h3 { color:#00adb5; margin-bottom:8px; }
-    section p, section pre { margin-bottom:12px; }
-    pre { background:#0f3460; padding:10px; border-radius:6px; overflow-x:auto; }
+    section p, section pre { margin-bottom:12px; font-size:0.95rem; }
+    pre { 
+      background:#0f3460; 
+      padding:12px; 
+      border-left:4px solid #e94560; 
+      border-radius:6px; 
+      overflow-x:auto; 
+      white-space: pre-wrap; 
+      word-wrap: break-word;
+    }
     code { color:#e94560; font-weight:bold; }
 
     /* ===== ANIMATIONS ===== */
-    @keyframes fadeInDown {
-      0% { opacity:0; transform: translateY(-20px);}
-      100% { opacity:1; transform: translateY(0);}
-    }
+    @keyframes fadeInDown { 0% { opacity:0; transform: translateY(-20px);} 100% { opacity:1; transform: translateY(0);} }
+    @keyframes fadeInUp { 0% { opacity:0; transform: translateY(20px);} 100% { opacity:1; transform: translateY(0);} }
+    @keyframes fadeIn { 0% { opacity:0;} 100% { opacity:1;} }
 
     /* ===== FOOTER ===== */
     footer { text-align:center; padding:20px; color:#888; font-size:0.9rem; }
@@ -101,45 +115,53 @@
   <header>
     <h1>Bienvenue sur votre projet Métriques</h1>
     <h2>Ceci est le projet de : Peres FOSSI</h2>
-    <p>Si vous voyez cette page dans votre navigateur, vous avez déjà gagné <b>4 points</b> sur votre évaluation.</p>
+    <p>Si vous avez mis en ligne votre solution et si cette page d'accueil s'affiche dans votre navigateur alors <b>vous avez déjà gagné 4 points</b> sur votre note d'évaluation.</p>
   </header>
 
-  <!-- ===== SECTION INTRO ===== -->
+  <!-- ===== CONTENU ===== -->
   <section>
-    <h3>Notions acquises</h3>
-    <p>Vous avez appris à créer un hébergement en ligne, installer une application, forker un projet GitHub et créer des Secrets utilisés lors de vos commits.</p>
+    <p>Notions acquises lors de cette étape : Vous avez appris à créer votre hébergement en ligne sur Alwaydata, installer une application, forker un projet GitHub et créer des Secrets qui seront utilisés lors de vos Commits pour mettre à jour votre site en ligne.</p>
+    <hr>
   </section>
 
-  <!-- ===== EXERCICES ===== -->
   <section>
     <h3>Exercice 1 : Personnaliser votre page d'accueil (1 point)</h3>
-    <p>Modifier le fichier hello.html pour préciser votre Prénom et Nom.</p>
+    <p>Modifier le fichier hello.html de votre projet GitHub afin de préciser votre Prénom et Nom sur la page d'accueil de votre site (Modification de la ligne 4 du fichier hello.html)</p>
+    <p>Notions acquises : Vous avez pris connaissance de votre environnement GitHub et de ses fichiers, répertoires, et des "Commits".</p>
   </section>
 
   <section>
     <h3>Exercice 2 : Création d'une nouvelle route (2 points)</h3>
-    <p>Créer une route "/contact/" affichant "Ma page de contact".</p>
+    <p>Objectif : Savoir créer des routes (c'est-à-dire créer une nouvelle API)</p>
     <pre><code>
 @app.route("/contact/")
 def MaPremiereAPI():
-    return "<h2>Ma page de contact</h2>"
+    return "&lt;h2&gt;Ma page de contact&lt;/h2&gt;"
     </code></pre>
+    <p>Notions acquises : Vous avez appris à créer des routes dans Flask.</p>
   </section>
 
   <section>
-    <h3>Exercice 3 : Utilisation d'une API (3 points)</h3>
-    <p>Extraire les données météo depuis OpenWeatherMap et convertir les températures en °C.</p>
+    <h3>Exercice 3 : Les données d'une API (3 points)</h3>
+    <p>Objectif : Utiliser les données issues d'une API externe.</p>
     <pre><code>
 @app.route('/tawarano/')
 def meteo():
-    ...
+    response = urlopen('https://samples.openweathermap.org/data/2.5/forecast?lat=0&lon=0&appid=xxx')
+    raw_content = response.read()
+    json_content = json.loads(raw_content.decode('utf-8'))
+    results = []
+    for list_element in json_content.get('list', []):
+        dt_value = list_element.get('dt')
+        temp_day_value = list_element.get('main', {}).get('temp') - 273.15
+        results.append({'Jour': dt_value, 'temp': temp_day_value})
     return jsonify(results=results)
     </code></pre>
   </section>
 
   <section>
-    <h3>Exercice 4 à 6 : Graphiques et Commits</h3>
-    <p>Vous allez créer vos graphiques et mesurer vos commits via les routes suivantes :</p>
+    <h3>Exercices 4 à 6 : Graphiques et Commits</h3>
+    <p>Vous allez créer vos graphiques et mesurer vos commits via les routes :</p>
     <ul>
       <li>/rapport/ → Graphique des relevés</li>
       <li>/histogramme → Histogramme des températures</li>
@@ -147,7 +169,6 @@ def meteo():
     </ul>
   </section>
 
-  <!-- ===== FOOTER ===== -->
   <footer>
     &copy; 2025 Peres FOSSI - Projet Métriques
   </footer>
